@@ -88,8 +88,16 @@ addDependenciesBetweenProjects(){
     dotnet add $projectName.WebApi/$projectName.WebApi.csproj reference $projectName.Infrastructure/$projectName.Infrastructure.csproj
 }
 
+addProjectsDependenciesIntoSln(){
+    dotnet sln $projectName.sln add $projectName.Application/$projectName.Application.csproj
+    dotnet sln $projectName.sln add $projectName.Infrastructure/$projectName.Infrastructure.csproj
+    dotnet sln $projectName.sln add $projectName.WebApi/$projectName.WebApi.csproj
+    dotnet sln $projectName.sln add $projectName.Domain/$projectName.Domain.csproj  
+}
+
 createSolution(){
     dotnet new sln
+    addProjectsDependenciesIntoSln
 }
 
 # enableCors(){
