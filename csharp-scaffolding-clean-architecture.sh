@@ -1,10 +1,17 @@
 #!/bin/bash
 
-################################
-# Author: Rafael S. Lewenstein
-# Version: 0.0.1
-# https://github.com/rslewenstein
-################################
+cat << EOT
+
+/*************************************/
+/* C# Clean Architecture Scaffolding */
+/* .Net >= 6                         */
+/* Version: 0.0.1                    */
+/*                                   */
+/* Author: Rafael S. Lewenstein      */
+/* http://github.com/rslewenstein    */
+/*************************************/
+
+EOT
 
 read -p "Type the project name: " projectName
 # read -p "Do you want enable cors? (yes = 1 | no = 0): " OptionEnableCors
