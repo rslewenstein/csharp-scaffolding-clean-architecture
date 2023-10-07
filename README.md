@@ -1,0 +1,1 @@
+# C# scaffolding clean architecture
