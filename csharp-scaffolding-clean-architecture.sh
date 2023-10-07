@@ -7,7 +7,12 @@
 ################################
 
 read -p "Type the project name: " projectName
-read -p "Do you want enable cors? (yes | no) " enableCors
+# read -p "Do you want enable cors? (yes = 1 | no = 0): " enableCors
+
+# if ((! $enableCors  == yes) || ($enableCors == no)); then
+#     echo "Type yes or no."
+#     exit 0
+# fi
 
 createMain(){
     mkdir $projectName
@@ -75,7 +80,7 @@ createInfrastructureProject(){
 }
 
 createWebApiProject(){
-    dotnet new classlib -n $projectName.WebApi
+    dotnet new webapi -n $projectName.WebApi
 }
 
 addDependenciesBetweenProjects(){
@@ -104,6 +109,7 @@ createSolution(){
 #     cd $projectName.WebApi
 
 #     cat program.cs
+#     sed '2s/^/texto/'
 
 #     cd ..
 # }
