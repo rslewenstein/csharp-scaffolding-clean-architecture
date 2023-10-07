@@ -2,7 +2,7 @@
 
 ################################
 # Author: Rafael S. Lewenstein
-# Version: 0.1
+# Version: 0.0.1
 # https://github.com/rslewenstein
 ################################
 
@@ -12,6 +12,9 @@ read -p "Do you want enable cors? (0-No, 1-yes) " enableCors
 createMainFolder(){
     mkdir $projectName
     cd $projectName
+    createOtherFiles
+
+    dotnet new classlib -n $projectName.Domain
 }
 
 createOtherFiles(){
@@ -20,11 +23,68 @@ createOtherFiles(){
 
     touch .gitignore
     cat > '.gitignore' << EOT
+
+    # .NET Core
+    project.lock.json
+    project.fragment.lock.json
+    artifacts/
+
+    # VS Code files for those working on multiple tools
     .vscode
+    .vscode/*
+    !.vscode/settings.json
+    !.vscode/tasks.json
+    !.vscode/launch.json
+    !.vscode/extensions.json
+    *.code-workspace
+
+    # Local History for Visual Studio Code
+    .history/
+
+    # Windows Installer files from build outputs
+    *.cab
+    *.msi
+    *.msix
+    *.msm
+    *.msp
+
+    ### DotnetCore ###
+    # .NET Core build folders
+    bin/
+    obj/
+
     csharp-scaffolding-clean-architecture.sh
 EOT
 }
 
+createDomainProject(){
+   dotnet new classlib -n $projectName.Domain
+}
 
+# createApplicationProject(){
+
+# }
+
+# createInfrastructureProject(){
+
+# }
+
+# createWebApiProject(){
+
+# }
+
+# enableCors(){
+
+# }
+
+# addDependenciesBetweenProjects(){
+
+# }
+
+# createSolution(){
+
+# }
+
+###
 createMainFolder
-createOtherFiles
+createDomainProject
