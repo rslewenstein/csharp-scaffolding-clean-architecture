@@ -7,9 +7,9 @@
 ################################
 
 read -p "Type the project name: " projectName
-# read -p "Do you want enable cors? (yes = 1 | no = 0): " enableCors
+# read -p "Do you want enable cors? (yes = 1 | no = 0): " OptionEnableCors
 
-# if ((! $enableCors  == yes) || ($enableCors == no)); then
+# if ((! $OptionEnableCors  == yes) || ($OptionEnableCors == no)); then
 #     echo "Type yes or no."
 #     exit 0
 # fi
@@ -25,6 +25,7 @@ createMain(){
     createWebApiProject
     addDependenciesBetweenProjects
     createSolution
+    enableCors
 }
 
 createOtherFiles(){
@@ -105,14 +106,19 @@ createSolution(){
     addProjectsDependenciesIntoSln
 }
 
-# enableCors(){
-#     cd $projectName.WebApi
+enableCors(){
+    cd $projectName.WebApi
 
-#     cat program.cs
-#     sed '2s/^/texto/'
+    sed -i "9i\ " Program.cs
+    sed -i "10i // Habilitando CORS" Program.cs
+    sed -i "11i builder.Services.AddCors();" Program.cs
 
-#     cd ..
-# }
+    sed -i "21i\ " Program.cs
+    sed -i "22i\ // Habilitando CORS" Program.cs
+    sed -i "23i\ app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());" Program.cs
+
+    cd ..
+}
 
 
 ###
