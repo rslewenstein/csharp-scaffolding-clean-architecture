@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cat << EOT
+cat << EOT 
 
 /*************************************/
 /* C# Clean Architecture Scaffolding */
@@ -8,18 +8,20 @@ cat << EOT
 /* Version: 0.0.1                    */
 /*                                   */
 /* Author: Rafael S. Lewenstein      */
-/* http://github.com/rslewenstein    */
+/* https://github.com/rslewenstein   */
 /*************************************/
 
 EOT
 
 read -p "Type the project name: " projectName
-# read -p "Do you want enable cors? (yes = 1 | no = 0): " OptionEnableCors
 
-# if ((! $OptionEnableCors  == yes) || ($OptionEnableCors == no)); then
-#     echo "Type yes or no."
-#     exit 0
-# fi
+if [ "$projectName" = "" ]; 
+then
+    echo -e "\033[1;91mEnter a valid name\033"
+    exit 0
+fi
+
+read -p "Do you want enable CORS? (Type Y to accept or press ENTER to skip): " optionEnableCors
 
 createMain(){
     mkdir $projectName
@@ -32,7 +34,13 @@ createMain(){
     createWebApiProject
     addDependenciesBetweenProjects
     createSolution
-    enableCors
+    
+    if [ $optionEnableCors = "y" ] || [ $optionEnableCors = "Y" ]; 
+    then
+        enableCors
+    fi
+
+    echo -e "\033[1;32mProjects were created!\033"
 }
 
 createOtherFiles(){
@@ -105,7 +113,7 @@ addProjectsDependenciesIntoSln(){
     dotnet sln $projectName.sln add $projectName.Application/$projectName.Application.csproj
     dotnet sln $projectName.sln add $projectName.Infrastructure/$projectName.Infrastructure.csproj
     dotnet sln $projectName.sln add $projectName.WebApi/$projectName.WebApi.csproj
-    dotnet sln $projectName.sln add $projectName.Domain/$projectName.Domain.csproj  
+    dotnet sln $projectName.sln add $projectName.Domain/$projectName.Domain.csproj
 }
 
 createSolution(){
@@ -124,9 +132,10 @@ enableCors(){
     sed -i "22i\ // Habilitando CORS" Program.cs
     sed -i "23i\ app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());" Program.cs
 
+    echo -e "\033[1;32mCORS were enabled!\033"
+
     cd ..
 }
-
 
 ###
 createMain
