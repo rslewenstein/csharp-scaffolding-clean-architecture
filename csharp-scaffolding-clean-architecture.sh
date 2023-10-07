@@ -61,17 +61,17 @@ createDomainProject(){
    dotnet new classlib -n $projectName.Domain
 }
 
-# createApplicationProject(){
+createApplicationProject(){
+    dotnet new classlib -n $projectName.Application
+}
 
-# }
+createInfrastructureProject(){
+    dotnet new classlib -n $projectName.Infrastructure
+}
 
-# createInfrastructureProject(){
-
-# }
-
-# createWebApiProject(){
-
-# }
+createWebApiProject(){
+    dotnet new classlib -n $projectName.WebApi
+}
 
 # enableCors(){
 
@@ -88,3 +88,6 @@ createDomainProject(){
 ###
 createMainFolder
 createDomainProject
+createApplicationProject
+createInfrastructureProject
+createWebApiProject
