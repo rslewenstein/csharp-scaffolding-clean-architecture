@@ -19,6 +19,7 @@ createMain(){
     createInfrastructureProject
     createWebApiProject
     addDependenciesBetweenProjects
+    createSolution
 }
 
 createOtherFiles(){
@@ -87,13 +88,18 @@ addDependenciesBetweenProjects(){
     dotnet add $projectName.WebApi/$projectName.WebApi.csproj reference $projectName.Infrastructure/$projectName.Infrastructure.csproj
 }
 
+createSolution(){
+    dotnet new sln
+}
+
 # enableCors(){
+#     cd $projectName.WebApi
 
+#     cat program.cs
+
+#     cd ..
 # }
 
-# createSolution(){
-
-# }
 
 ###
 createMain
