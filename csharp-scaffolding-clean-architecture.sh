@@ -7,14 +7,18 @@
 ################################
 
 read -p "Type the project name: " projectName
-read -p "Do you want enable cors? (0-No, 1-yes) " enableCors
+read -p "Do you want enable cors? (yes | no) " enableCors
 
-createMainFolder(){
+createMain(){
     mkdir $projectName
     cd $projectName
     createOtherFiles
 
-    dotnet new classlib -n $projectName.Domain
+    createDomainProject
+    createApplicationProject
+    createInfrastructureProject
+    createWebApiProject
+    addDependenciesBetweenProjects
 }
 
 createOtherFiles(){
@@ -73,11 +77,17 @@ createWebApiProject(){
     dotnet new classlib -n $projectName.WebApi
 }
 
+addDependenciesBetweenProjects(){
+    dotnet add $projectName.Application/$projectName.Application.csproj reference $projectName.Domain/$projectName.Domain.csproj
+    dotnet add $projectName.Application/$projectName.Application.csproj reference $projectName.Infrastructure/$projectName.Infrastructure.csproj
+
+    dotnet add $projectName.Infrastructure/$projectName.Infrastructure.csproj reference $projectName.Domain/$projectName.Domain.csproj
+
+    dotnet add $projectName.WebApi/$projectName.WebApi.csproj reference $projectName.Application/$projectName.Application.csproj 
+    dotnet add $projectName.WebApi/$projectName.WebApi.csproj reference $projectName.Infrastructure/$projectName.Infrastructure.csproj
+}
+
 # enableCors(){
-
-# }
-
-# addDependenciesBetweenProjects(){
 
 # }
 
@@ -86,8 +96,4 @@ createWebApiProject(){
 # }
 
 ###
-createMainFolder
-createDomainProject
-createApplicationProject
-createInfrastructureProject
-createWebApiProject
+createMain
