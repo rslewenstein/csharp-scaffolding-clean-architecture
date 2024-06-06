@@ -124,13 +124,17 @@ createSolution(){
 enableCors(){
     cd $projectName.WebApi
 
+    sed -i "1i var  MyAllowSpecificOrigins = "'"_myAllowSpecificOrigins"'";" Program.cs
     sed -i "9i\ " Program.cs
-    sed -i "10i // Habilitando CORS" Program.cs
-    sed -i "11i builder.Services.AddCors();" Program.cs
+    sed -i "4i // Habilitando CORS" Program.cs
+    sed -i "5i builder.Services.AddCors(options => {options.AddPolicy(MyAllowSpecificOrigins, policy =>{policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();});});" Program.cs
+    sed -i "6i\ " Program.cs
 
     sed -i "21i\ " Program.cs
-    sed -i "22i\ // Habilitando CORS" Program.cs
-    sed -i "23i\ app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());" Program.cs
+    sed -i "14i\ " Program.cs
+    sed -i "15i\ // Habilitando CORS" Program.cs
+    sed -i "16i\ app.UseCors(MyAllowSpecificOrigins);" Program.cs
+    sed -i "17i\ " Program.cs
 
     echo -e "\033[1;32mCORS were enabled!\033"
 
